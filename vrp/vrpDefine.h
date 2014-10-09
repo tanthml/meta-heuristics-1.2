@@ -17,10 +17,11 @@
 //Define for stop's status
 #define ROUTED                                  0
 #define UN_ROUTED                               1
-#define NON_GROUP                               9999
+#define NON_GROUP                               999
 
 //Define constant value
-#define FEET_TO_MILES                           0.000189393939
+#define KM_to_Met                               1000
+#define KM_per_Hour_to_Met_per_Min              (1000/60)
 #define MAX_NUMBER                              +9999999
 #define MIN_NUMBER                              -9999999
 

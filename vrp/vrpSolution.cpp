@@ -208,7 +208,7 @@ vrpStop* vrpSolution::getNextStop(vrpSubRoute& sub, unsigned int &pos) const {
 
 vrpSubRoute* vrpSolution::createSubRoute(vrpStop* ref, double rest_dist, double coming_time){
     vrpStop* _depot = _problem->getDepot();  
-    vrpStop* stop = getRandomFirstStop(ref, coming_time);   
+    vrpStop* stop = getBestFirstStop(ref, coming_time);//getRandomFirstStop(ref, coming_time);   
     vector<vrpStop*> _landfill = _problem->getLandfill();
     if(stop != NULL) {
         vrpSubRoute *result = new vrpSubRoute(rest_dist, coming_time);
@@ -325,7 +325,6 @@ void vrpSolution::update() {
         _total_use_time += route->getTotalUseTime();     
         _num_sub_route += route->size();
         _total_cost += route->evaluate();
-        _shape_metric += route->getShapeMetric();
     } 
 }
 
@@ -469,7 +468,6 @@ void vrpSolution::writeCSVFile(const char* file_name) const{
                 os << sub->getAcomnLoad(k) << ",";    
                 os << (int)sub->getCenterX() << ",";
                 os << (int)sub->getCenterY() << ",";
-                os << sub->getShapeMetric(k) << ",";
                 os << stop->Group << ",";
                 os << stop->Type << ",";
                 os << j << ",";

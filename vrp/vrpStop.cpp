@@ -33,8 +33,8 @@ void vrpStop::printOn(ostream& os) const {
 }
 void vrpStop::debug(ostream& os) const {
   os << (int)ID << "\t";
-  os << (int)X << "\t";
-  os << (int)Y << "\t";
+  os << X << "\t";
+  os << Y << "\t";
   os << (int)EarlyTime<< "\t";
   os << (int)LateTime << "\t";
   os << (int)ServiceTime << "\t";
@@ -43,29 +43,29 @@ void vrpStop::debug(ostream& os) const {
   os << (int)Group << "\t";
   os << endl;
 } 
-void vrpStop::Serialize(edaBuffer &buf, bool pack) {
-    edaSerialize::Serialize(buf,pack);
+void vrpStop::Serialize(edaBuffer &buf, bool pack) 
+{
     if ( pack ){
-        buf.Pack( &ID, 1 );
-        buf.Pack( &X, 1 );
-        buf.Pack( &Y, 1 );
-        buf.Pack( &Load, 1 );
-        buf.Pack( &EarlyTime, 1 );
-        buf.Pack( &LateTime, 1 );
-        buf.Pack( &ServiceTime, 1 );
-        buf.Pack( &Type, 1 );
-        buf.Pack( &Group, 1 );
+        buf.Pack( &ID );
+        buf.Pack( &X );
+        buf.Pack( &Y );
+        buf.Pack( &Load );
+        buf.Pack( &EarlyTime );
+        buf.Pack( &LateTime );
+        buf.Pack( &ServiceTime );
+        buf.Pack( &Type );
+        buf.Pack( &Group );
     } 
     else {
-        buf.UnPack( &ID, 1 );
-        buf.UnPack( &X, 1 );
-        buf.UnPack( &Y, 1 );
-        buf.UnPack( &Load, 1 );
-        buf.UnPack( &EarlyTime, 1 );
-        buf.UnPack( &LateTime, 1 );
-        buf.UnPack( &ServiceTime, 1 );
-        buf.UnPack( &Type, 1 );
-        buf.UnPack( &Group, 1 );
+        buf.UnPack( &ID );
+        buf.UnPack( &X );
+        buf.UnPack( &Y );
+        buf.UnPack( &Load );
+        buf.UnPack( &EarlyTime );
+        buf.UnPack( &LateTime );
+        buf.UnPack( &ServiceTime );
+        buf.UnPack( &Type );
+        buf.UnPack( &Group );
     }
 }
 

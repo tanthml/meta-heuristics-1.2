@@ -7,12 +7,11 @@
 
 #ifndef VRPPROBLEM_H
 #define	VRPPROBLEM_H
-#include "../lib/eda.h"
+
 #include "vrpStop.h"
 #include "vrpGroupConflict.h"
 
-#include <fstream>
-using namespace std;
+
 class vrpProblem: public edaProblem {
 public:
     vrpProblem();
@@ -27,31 +26,33 @@ public:
     vrpStop* getDepot() const;
     vrpStop* getStop(const unsigned int id) const;
     unsigned int getNumStops() const;
-    double getMaxCapacity() const;
-    double getMaxTotalDist() const; 
-    double getDist(const unsigned int id_1, const unsigned int id_2) const;
-    double getTime(const unsigned int id_1, const unsigned int id_2) const;
+    unsigned int getMaxCapacity() const;
+    unsigned int getMaxTotalDist() const; 
+    unsigned int getDist(const unsigned int id_1, const unsigned int id_2) const;
+    unsigned int getTime(const unsigned int id_1, const unsigned int id_2) const;
     bool isConflict(const unsigned int group, const vector<unsigned int>& groups) const;  
     bool isConflict(const vector<unsigned int>& groups) const;
     void printOn(ostream& os) const;
     void printTable(const char* file_name);
     void Serialize(edaBuffer &buf, bool pack);
     setClassID(_USERCLASSID_ + _CLSID_VRP_PROBLEM_);
-    
+
+    const char* className() const {
+        return "vrpProblem";
+    }
+
 private:    
     unsigned int _num_stops;
-    double _speed;
-    double _capacity_veh; //the capacity of the vehicle
-    double _max_total_dist;
-    double _max_total_stop;
-    double *_dist; //the distance between 2 stops
+    unsigned int _speed;
+    unsigned int _capacity_veh; //the capacity of the vehicle
+    unsigned int _max_total_dist;
+    unsigned int *_dist; //the distance between 2 stops
     vrpGroupConflict *_conflict_group; // the conflict group in problem
     vrpStop *_list_stops; //list stops have num_stops 
-    void computeDistances(); 
-    double getMinutes(const double hour_minute) const;
+    unsigned int getMinutes(const unsigned int hour_minute) const;
     void easer();
 
 };
-
+ostream& operator<<(ostream &os, const vrpProblem &pro);
 #endif	/* VRPPROBLEM_H */
 

@@ -93,12 +93,6 @@ vrpConst* vrpRoute::getParameter() const {
     if(size() > 0) return at(0)->getParameter(); 
     return NULL;
 }
-double vrpRoute::getShapeMetric() const {
-    double result = 0;
-    for(unsigned int i = 0; i < size(); i++) 
-        result += at(i)->getShapeMetric();
-    return result;
-}
 void vrpRoute::printOn(ostream& os) const {
     for(unsigned int i = 0; i < size(); i++) {
         vrpSubRoute *subroute = at(i);

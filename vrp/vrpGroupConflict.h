@@ -7,10 +7,10 @@
 
 #ifndef VRPGROUPCONFLICT_H
 #define	VRPGROUPCONFLICT_H
-#include "../lib/eda.h"
+
 #include "vrpDefine.h"
 
-using namespace std;
+
 class vrpGroupConflict: public edaSerialize  {
 public:
     vrpGroupConflict();
@@ -25,12 +25,17 @@ public:
     void prinOn(ostream& os) const;
     
     void Serialize(edaBuffer &buf, bool pack);
+    
+    const char* className() const {
+        return "vrpGroupConflict";
+    }
+    
     setClassID(_USERCLASSID_ + _CLSID_VRP_GROUP_CONFLICT_);
 private:
     void easer();
     unsigned int _size;
     bool *_matrix;
 };
-
+ostream& operator<<(ostream &os, const vrpGroupConflict &conflict);
 #endif	/* VRPGROUPCONFLICT_H */
 

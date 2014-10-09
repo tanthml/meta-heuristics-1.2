@@ -315,22 +315,6 @@ void vrpSubRoute::setRestDist(double value) {
     _init_res_dist = value;
 }
 
-double vrpSubRoute::getShapeMetric() const {
-    double result = 0;
-    for(unsigned int i = 0; i < size(); i++) {  
-        result += abs(_problem->getStop(at(i))->X - _x_center) 
-                + abs(_problem->getStop(at(i))->Y - _y_center);
-    }    
-    result *=  FEET_TO_MILES;
-    return result;
-}
-double vrpSubRoute::getShapeMetric(unsigned int index) const {
-    double result = 0;
-    result += abs(_problem->getStop(at(index))->X - _x_center);
-    result += abs(_problem->getStop(at(index))->Y - _y_center);
-    result *= FEET_TO_MILES; 
-    return result;
-}
 double vrpSubRoute::getCenterX() const {
     return _x_center;
 }

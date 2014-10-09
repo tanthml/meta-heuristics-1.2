@@ -14,18 +14,17 @@ using namespace std;
 int main(int argc, char** argv) {
   EDAMetasearchStart (argc, argv);
   
-  if (argc != 2)
+  if (false)
   {
     std::cerr << "Usage : ./vrpMPISearch [instance]" << std::endl;
   }
   else
   { 
 
-    vrpProblem *vrpPro = new vrpProblem();
-    vrpPro->load(argv[1]);
+    vrpProblem *vrpPro = new vrpProblem("50_stops.con");
     vrpConst *vrpCon = new vrpConst();
     edaSolutionList list;
-    for(unsigned int i = 0; i < 40; i++) {
+    for(unsigned int i = 0; i < 50; i++) {
       vrpSolution *vrpSol = new vrpSolution (vrpPro); 
       vrpSol->init();
       list.push_back(vrpSol);
@@ -54,6 +53,8 @@ int main(int argc, char** argv) {
         cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
         cout << "[Vehicles] " << vrpSol->size() << endl;
         cout << "[Route] " << *vrpSol << endl;
+        cout << "------------------------------------------------------------------------------------------" << endl;
+        vrpSol->debug(cout);
     }
   }
   EDAMetasearchStop ();

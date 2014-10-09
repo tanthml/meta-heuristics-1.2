@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=Cygwin_4.x-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -118,7 +118,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/tsp/tspKOpt.o \
 	${OBJECTDIR}/tsp/tspKOptNext.o \
 	${OBJECTDIR}/tsp/tspKOptRand.o \
-	${OBJECTDIR}/tsp/tspMPISearch02.o \
 	${OBJECTDIR}/tsp/tspOrOpt.o \
 	${OBJECTDIR}/tsp/tspOrOptNext.o \
 	${OBJECTDIR}/tsp/tspOrOptRand.o \
@@ -132,6 +131,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpCyclicMove.o \
 	${OBJECTDIR}/vrp/vrpCyclicNext.o \
 	${OBJECTDIR}/vrp/vrpCyclicRand.o \
+	${OBJECTDIR}/vrp/vrpGASearch.o \
 	${OBJECTDIR}/vrp/vrpGenne.o \
 	${OBJECTDIR}/vrp/vrpGroupConflict.o \
 	${OBJECTDIR}/vrp/vrpInterchangeMove.o \
@@ -146,15 +146,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpStop.o \
 	${OBJECTDIR}/vrp/vrpSubRoute.o \
 	${OBJECTDIR}/vrp/vrpSubRouteMove.o \
-	${OBJECTDIR}/vrp/vrpSubRouteNext.o
+	${OBJECTDIR}/vrp/vrpSubRouteNext.o \
+	${OBJECTDIR}/vrp/vrpTSSearch.o
 
 
 # C Compiler Flags
 CFLAGS=
 
 # CC Compiler Flags
-CCFLAGS=-DCOMM_MPI
-CXXFLAGS=-DCOMM_MPI
+CCFLAGS=-DDCOMM_MPI
+CXXFLAGS=-DDCOMM_MPI
 
 # Fortran Compiler Flags
 FFLAGS=
@@ -588,11 +589,6 @@ ${OBJECTDIR}/tsp/tspKOptRand.o: tsp/tspKOptRand.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tsp/tspKOptRand.o tsp/tspKOptRand.cpp
 
-${OBJECTDIR}/tsp/tspMPISearch02.o: tsp/tspMPISearch02.cpp 
-	${MKDIR} -p ${OBJECTDIR}/tsp
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/tsp/tspMPISearch02.o tsp/tspMPISearch02.cpp
-
 ${OBJECTDIR}/tsp/tspOrOpt.o: tsp/tspOrOpt.cpp 
 	${MKDIR} -p ${OBJECTDIR}/tsp
 	${RM} "$@.d"
@@ -657,6 +653,11 @@ ${OBJECTDIR}/vrp/vrpCyclicRand.o: vrp/vrpCyclicRand.cpp
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpCyclicRand.o vrp/vrpCyclicRand.cpp
+
+${OBJECTDIR}/vrp/vrpGASearch.o: vrp/vrpGASearch.cpp 
+	${MKDIR} -p ${OBJECTDIR}/vrp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpGASearch.o vrp/vrpGASearch.cpp
 
 ${OBJECTDIR}/vrp/vrpGenne.o: vrp/vrpGenne.cpp 
 	${MKDIR} -p ${OBJECTDIR}/vrp
@@ -732,6 +733,11 @@ ${OBJECTDIR}/vrp/vrpSubRouteNext.o: vrp/vrpSubRouteNext.cpp
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpSubRouteNext.o vrp/vrpSubRouteNext.cpp
+
+${OBJECTDIR}/vrp/vrpTSSearch.o: vrp/vrpTSSearch.cpp 
+	${MKDIR} -p ${OBJECTDIR}/vrp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpTSSearch.o vrp/vrpTSSearch.cpp
 
 # Subprojects
 .build-subprojects:

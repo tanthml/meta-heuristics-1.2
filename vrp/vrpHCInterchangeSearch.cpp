@@ -5,24 +5,24 @@
  * Created on November 21, 2012, 3:18 PM
  */
 
-
+#include <iostream>
 #include "../vrp/vrpLibrary.h"
 
 using namespace std;
 
 int main(int argc, char** argv) {
-  EDAMetasearchStart (argc, argv);
+//  EDAMetasearchStart (argc, argv);
   
-  if (argc != 2)
-  {
-    std::cerr << "Usage : ./" <<  __progname
-              << " [instance]" << std::endl;
-  }
-  else
-  {
-    vrpProblem *vrpPro = new vrpProblem(argv[1]);
+//  if (argc != 2)
+//  {
+//    std::cerr << "Usage : ./" <<  __progname
+//              << " [instance]" << std::endl;
+//  }
+//  else
+//  {
+    vrpProblem *vrpPro = new vrpProblem("50_stops.con");
     edaSolutionList list;
-    for(unsigned int i = 0; i < 40; i++) {
+    for(unsigned int i = 0; i < 1; i++) {
       vrpSolution *vrpSol = new vrpSolution (vrpPro); 
       vrpSol->init();
       list.push_back(vrpSol);
@@ -31,15 +31,15 @@ int main(int argc, char** argv) {
     vrpInterchangeMove optMove;
     vrpInterchangeNext optNext(vrpPro);
     edaFirstImprSelect moveSelect;
-    edaGenContinue cont(1500); 
+    edaGenContinue cont; 
     edaHC hcSearch(&optMove, &optNext, &moveSelect, &cont);  
 
     edaSeqWrapperControl sfControl; 
     sfControl.insertVertex (&hcSearch);   
-    
+
     if (!sfControl.search (list))
     {
-      std::cerr << "Error: Cannot execute search" << std::endl;
+        cout << "Error: Cannot execute search" << std::endl;
     }
     else
     {
@@ -49,10 +49,11 @@ int main(int argc, char** argv) {
         cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
         cout << "[Vehicles] " << vrpSol->size() << endl;
         cout << "[Route] " << *vrpSol << endl;
+        cout << "------------------------------------------------------------------------------------------" << endl;
+        vrpSol->debug(cout);
     }
-        
-  }
-  EDAMetasearchStop ();
+//  }
+//  EDAMetasearchStop ();
   return 0;
 }
 

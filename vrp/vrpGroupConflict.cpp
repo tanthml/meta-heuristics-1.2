@@ -49,7 +49,13 @@ bool vrpGroupConflict::isConflict(const vector<unsigned int>& groups) const {
     return false;
 }
 void vrpGroupConflict::prinOn(ostream& os) const {
-    
+    for(unsigned int i = 0 ; i < _size; i++) {
+        for(unsigned int j = 0; j < _size; j++) {            
+            if(_matrix[i*_size + j] ) os << "1 ";
+            else os << "0 ";
+        }
+        os << endl;
+    }    
 }
 
 void vrpGroupConflict::Serialize(edaBuffer &buf, bool pack)
@@ -73,4 +79,9 @@ void vrpGroupConflict::easer() {
         delete [] _matrix;
         _matrix = NULL;
     }
+}
+
+ostream& operator << (ostream &os, const vrpGroupConflict &conflict) {
+    conflict.prinOn(os);
+    return os;
 }

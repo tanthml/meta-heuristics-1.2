@@ -14,7 +14,7 @@ using namespace std;
 int main(int argc, char** argv) {
   EDAMetasearchStart (argc, argv);
   
-  if (argc != 2)
+  if (false)
   {
     std::cerr << "Usage : ./" <<  __progname
               << " [instance]" << std::endl;
@@ -22,10 +22,9 @@ int main(int argc, char** argv) {
   else
   {
 
-    vrpProblem *vrpPro = new vrpProblem();
-    vrpPro->load(argv[1]);
+    vrpProblem *vrpPro = new vrpProblem("50_stops.con");
     edaSolutionList list;
-    for(unsigned int i = 0; i < 40; i++) {
+    for(unsigned int i = 0; i < 1; i++) {
       vrpSolution *vrpSol = new vrpSolution (vrpPro); 
       vrpSol->init();
       list.push_back(vrpSol);
@@ -35,7 +34,7 @@ int main(int argc, char** argv) {
     vrpInterchangeNext* optNext = new vrpInterchangeNext(vrpPro);
     edaSimpleMoveTabuList tabuList;
     edaImprBestFitAspirCrit aspirCrit;
-    edaGenContinue cont (1500); 
+    edaGenContinue cont (7); 
     edaTS tsSearch (optMove, optNext, &tabuList, &aspirCrit, &cont);  
   
     edaSeqWrapperControl sfControl; 
@@ -53,6 +52,8 @@ int main(int argc, char** argv) {
         cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
         cout << "[Vehicles] " << vrpSol->size() << endl;
         cout << "[Route] " << *vrpSol << endl;
+        cout << "------------------------------------------------------------------------------------------" << endl;
+        vrpSol->debug(cout);
     }
   }
   EDAMetasearchStop ();

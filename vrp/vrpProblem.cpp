@@ -12,16 +12,16 @@
 vrpProblem::vrpProblem()
   : _dist(NULL), _conflict_group(NULL), _list_stops (NULL) {}
 
-vrpProblem::vrpProblem(const vrpProblem& problem) {
+vrpProblem::vrpProblem(const vrpProblem& problem) 
+{
     this->_num_stops = problem._num_stops;
     this->_capacity_veh = problem._capacity_veh;
     this->_speed = problem._speed;
     this->_max_total_dist = problem._max_total_dist;
-    this->_max_total_stop = problem._max_total_stop;
     this->_list_stops = new vrpStop[this->_num_stops ];
     memcpy(this->_list_stops, problem._list_stops, sizeof(vrpStop) * _num_stops);
-    this->_dist = new double [_num_stops * _num_stops];
-    memcpy(this->_dist, problem._dist, sizeof(double) * _num_stops * _num_stops);
+    this->_dist = new unsigned int [_num_stops * _num_stops];
+    memcpy(this->_dist, problem._dist, sizeof(unsigned int) * _num_stops * _num_stops);
     _conflict_group = problem._conflict_group->clone(); 
 }
 vrpProblem::vrpProblem(const char *filename)
@@ -44,12 +44,16 @@ void vrpProblem::load(const char* filename) {
   double buffer;
   if (file) 
   {  
-      file >> _num_stops;         //read the number of stops
-      file >> _capacity_veh;      //read the capacity of vehicle
-      file >> _speed;             //speed of vehicle     
-      file >> _max_total_dist;    //get maximum total dist of a vehicle   
+      file >> _num_stops;                                   //read the number of stops
+      file >> _capacity_veh;                                //read the capacity of vehicle
+      file >> _speed;                                       //speed of vehicle
+      file >> _max_total_dist;                              //get maximum total dist of a vehicle 
+      
+      _speed *= KM_per_Hour_to_Met_per_Min;
+      _max_total_dist *= KM_to_Met;                        
       _list_stops = new vrpStop[_num_stops];
 
+      
       //read all property of stops    
       for (unsigned int i = 0; i < _num_stops; i++) {	
           file >> buffer;
@@ -63,27 +67,52 @@ void vrpProblem::load(const char* filename) {
           file >> buffer;
           _list_stops[i].LateTime = getMinutes(buffer); 
           file >> buffer;
-          _list_stops[i].ServiceTime = buffer/60; 
+          _list_stops[i].ServiceTime = buffer; 
           file >> buffer;
           _list_stops[i].Load = buffer;
           file >> buffer;
           _list_stops[i].Type = (unsigned int)buffer;	    
+          file >> buffer;
+          _list_stops[i].Group = (unsigned int)buffer;	
       }	    
+      
+      //get distance matrix	
+      /*
+      _dist = new unsigned int [_num_stops * _num_stops];
+      for (unsigned int i = 0; i < _num_stops; i++) {
+          for (unsigned int j = 0; j < _num_stops; j++) {
+              file >> buffer;
+              _dist[i*_num_stops + j] = (unsigned int)buffer;
+          }
+      } 
+      */
+
+      // hiệu chỉnh nhanh ma tran khoang cach
+      unsigned int _temp[18*18];
+      for (unsigned int i = 0; i < 18; i++) {
+          for (unsigned int j = 0; j < 18; j++) {
+              file >> buffer;
+              _temp[i*18 + j] = (unsigned int)buffer;
+          }
+      } 
+      _dist = new unsigned int [_num_stops * _num_stops];
+      for (unsigned int i = 0; i < _num_stops; i++) {
+          unsigned int index = i < 2 ? i : (i - 2)/3 + 2;
+          for (unsigned int j = 0; j < _num_stops; j++) {
+              unsigned int jndex = j < 2 ? j : (j - 2)/3 + 2;
+              _dist[i*_num_stops + j] = _temp[index*18 + jndex];
+          }
+      } 
+
       //get information about conflict stops
-      unsigned int count_group;    
-      file >> count_group; //number of the group customer
-      for(unsigned int i = 0 ; i < _num_stops ; i++) {
-          if(_list_stops[i].Type != REGULAR_STOP)        
-              _list_stops[i].Group = NON_GROUP;        
-          else        
-              _list_stops[i].Group = _list_stops[i].ID % count_group;        
-      }
-      _conflict_group = new vrpGroupConflict(count_group);
+      unsigned int numGroup;    
+      file >> numGroup; //number of the group customer
+      _conflict_group = new vrpGroupConflict(numGroup);
       unsigned int group_A, group_B;
       while(file >> group_A >> group_B )    
           _conflict_group->pushConflictGroup(group_A, group_B); 
+      
       file.close();
-      computeDistances();    
   }
   else 
   {
@@ -99,39 +128,27 @@ unsigned int vrpProblem::getNumStops() const {
 
 vrpStop* vrpProblem::getStop(const unsigned int id) const {
 	return &_list_stops[id];
-/*  vrpStop* stop = &_list_stops[id];
-  if(stop->ID == id)
-    return stop;
-  else {
-    for(unsigned int i = 0; i < _num_stops; i++) {
-      stop = &_list_stops[i];
-      if(stop->ID == id)
-        return stop;
-    }
-  }
-  return NULL;
-*/  
 }
 
-double vrpProblem::getMaxTotalDist() const {
+unsigned int vrpProblem::getMaxTotalDist() const {
     return _max_total_dist;
 }
 
-double vrpProblem::getMinutes(const double hour_minute) const {
-	unsigned hour = (unsigned int) hour_minute / 100 ;
-	unsigned minute = (unsigned int) hour_minute % 100;
+unsigned int vrpProblem::getMinutes(const unsigned int hour_minute) const {
+	unsigned int hour = (unsigned int) hour_minute / 100 ;
+	unsigned int minute = (unsigned int) hour_minute % 100;
 	return (hour * 60) + minute;
 }
 
-double vrpProblem::getDist(const unsigned int id_1, const unsigned int id_2) const {
+unsigned int vrpProblem::getDist(const unsigned int id_1, const unsigned int id_2) const {
     return _dist[id_1 * _num_stops + id_2];
 }
 
-double vrpProblem::getTime(const unsigned int id_1, const unsigned int id_2) const {
-    return getDist(id_1, id_2)/(_speed/60);
+unsigned int vrpProblem::getTime(const unsigned int id_1, const unsigned int id_2) const {
+    return getDist(id_1, id_2)/_speed;
 }
 
-double vrpProblem::getMaxCapacity() const {
+unsigned int vrpProblem::getMaxCapacity() const {
     return _capacity_veh;
 }
 
@@ -140,20 +157,6 @@ bool vrpProblem::isConflict(const unsigned int group, const vector<unsigned int>
 } 
 bool vrpProblem::isConflict(const vector<unsigned int>& groups) const {
     return _conflict_group->isConflict(groups);
-}
-void vrpProblem::computeDistances() {
-//	if (_dist) delete[] _dist;	
-    _dist = new double[_num_stops * _num_stops];
-    bzero(_dist, _num_stops * _num_stops * sizeof(double));
-    double distX, distY;
-	// Computations.
-	for (unsigned int i = 0; i < _num_stops; i++) {
-		for (unsigned int j = i + 1; j < _num_stops; j ++) {
-			distX =  _list_stops[i].X - _list_stops[j].X;
-			distY =  _list_stops[i].Y - _list_stops[j].Y;
-			_dist[i*_num_stops + j] = _dist[j*_num_stops + i] = (abs(distX) + abs(distY)) * FEET_TO_MILES;			
-		}
-	}
 }
 
 void vrpProblem::printOn(ostream& os) const {
@@ -174,6 +177,16 @@ void vrpProblem::printOn(ostream& os) const {
         os << (int)_list_stops[i].Group;
         os << endl;
     }
+    
+    os << "Distance matrix: " << endl;
+    for(unsigned int i = 0 ; i < _num_stops; i++) {
+        for(unsigned int j = 0; j < _num_stops; j++) {            
+            cout << getDist(i,j) << " ";
+        }
+        cout << endl;
+    }   
+    
+    os << "Conflict matrix: " << *_conflict_group;
 }
 void vrpProblem::printTable(const char* file_name) {
     ofstream os(file_name,ios::trunc);
@@ -194,18 +207,18 @@ void vrpProblem::printTable(const char* file_name) {
 void vrpProblem::Serialize(edaBuffer &buf, bool pack) {
   if ( pack )
   {
-    _conflict_group->doSerialize(buf,pack);
+    _conflict_group->doSerialize(buf, pack);
     buf.Pack( &_num_stops, 1 );
     buf.Pack( &_speed, 1 );
     buf.Pack( &_capacity_veh, 1 );
     buf.Pack( &_max_total_dist, 1 );
     for (unsigned int i=0; i < _num_stops; i++)
-      _list_stops[i].doSerialize(buf,pack);
+      _list_stops[i].doSerialize(buf, pack);
             buf.Pack( _dist, _num_stops * _num_stops );
 	} 
   else 
   {
-    _conflict_group = (vrpGroupConflict*)classGenerateFromBuffer( buf );
+    _conflict_group = (vrpGroupConflict*) classGenerateFromBuffer ( buf );
     buf.UnPack( &_num_stops, 1 );
     buf.UnPack( &_speed, 1 );
     buf.UnPack( &_capacity_veh, 1 );
@@ -218,7 +231,7 @@ void vrpProblem::Serialize(edaBuffer &buf, bool pack) {
         _list_stops[i]=*stop;
     }
     if (_dist == NULL) delete[] _dist;
-    _dist = new double[_num_stops * _num_stops];
+    _dist = new unsigned int[_num_stops * _num_stops];
     buf.UnPack(_dist, _num_stops * _num_stops);
   }
 }
@@ -231,11 +244,10 @@ vrpProblem& vrpProblem::operator = (const edaProblem &pro)
   this->_capacity_veh = problem._capacity_veh;
   this->_speed = problem._speed;
   this->_max_total_dist = problem._max_total_dist;
-  this->_max_total_stop = problem._max_total_stop;
   this->_list_stops = new vrpStop[this->_num_stops];
   memcpy(this->_list_stops, problem._list_stops, sizeof(vrpStop) * _num_stops);
-  this->_dist = new double [_num_stops * _num_stops];
-  memcpy(this->_dist, problem._dist, sizeof(double) * _num_stops * _num_stops);
+  this->_dist = new unsigned int [_num_stops * _num_stops];
+  memcpy(this->_dist, problem._dist, sizeof(unsigned int) * _num_stops * _num_stops);
   _conflict_group = problem._conflict_group->clone(); 
   return (*this);
 }
@@ -281,4 +293,9 @@ vrpStop* vrpProblem::getDepot() const {
     if(stop->Type == DEPOT) return stop;
   }   
   return NULL;
+}
+
+ostream& operator<<(ostream &os, const vrpProblem &pro)
+{
+    pro.printOn(os);
 }

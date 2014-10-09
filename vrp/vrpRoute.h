@@ -27,7 +27,6 @@ public:
     double getTotalMoveTime() const;
     double getServiceTime() const;
     double getTotalUseTime() const;
-    double getShapeMetric() const;
     vrpConst* getParameter() const;
     bool isRedundancy() const;
  

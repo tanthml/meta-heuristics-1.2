@@ -48,8 +48,6 @@ public:
   double getUseTime(unsigned int index) const;
   double getDistance(unsigned int index) const;
   double getRestDist() const;
-  double getShapeMetric() const;
-  double getShapeMetric(unsigned int index) const;
   double getCenterX() const;
   double getCenterY() const;
   double getDist(unsigned int from, unsigned int to) const;
