@@ -296,8 +296,24 @@
       <itemPath>Doxyfile</itemPath>
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Doxyfile</itemPath>
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
   </logicalFolder>
   <sourceRootList>
+    <Elem>lib</Elem>
+    <Elem>tsp</Elem>
+    <Elem>vrp</Elem>
+    <Elem>air</Elem>
     <Elem>lib</Elem>
     <Elem>tsp</Elem>
     <Elem>vrp</Elem>
@@ -307,7 +323,7 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>openMPI|GNU</compilerSet>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
