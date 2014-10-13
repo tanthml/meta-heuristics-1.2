@@ -44,7 +44,7 @@ public:
 private:    
     unsigned int _num_stops;
     unsigned int _speed;
-    unsigned int _capacity_veh; //the capacity of the vehicle
+    double _capacity_veh; //the capacity of the vehicle
     unsigned int _max_total_dist;
     unsigned int *_dist; //the distance between 2 stops
     vrpGroupConflict *_conflict_group; // the conflict group in problem

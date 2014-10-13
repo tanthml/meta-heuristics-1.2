@@ -11,21 +11,21 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-//  EDAMetasearchStart (argc, argv);
+  EDAMetasearchStart (argc, argv);
   
-//  if (argc != 2)
-//  {
-//    std::cerr << "Usage : ./" <<  __progname
-//              << " [instance]" << std::endl;
-//  }
-//  else
-//  {
-    vrpProblem *vrpPro = new vrpProblem("50_stops.con");
+  if (argc != 2)
+  {
+    std::cerr << "Usage : ./" <<  __progname
+              << " [instance]" << std::endl;
+  }
+  else
+  {
+    vrpProblem *vrpPro = new vrpProblem(argv[1]);
     edaSolutionList list;
     for(unsigned int i = 0; i < 1; i++) {
-      vrpSolution *vrpSol = new vrpSolution (vrpPro); 
-      vrpSol->init();
-      list.push_back(vrpSol);
+        vrpSolution *vrpSol = new vrpSolution (vrpPro); 
+        vrpSol->init();
+        list.push_back(vrpSol);
     }	
 
     vrpInterchangeMove optMove;
@@ -52,8 +52,8 @@ int main(int argc, char** argv) {
         cout << "------------------------------------------------------------------------------------------" << endl;
         vrpSol->debug(cout);
     }
-//  }
-//  EDAMetasearchStop ();
+  }
+  EDAMetasearchStop ();
   return 0;
 }
 

@@ -76,31 +76,12 @@ void vrpProblem::load(const char* filename) {
           _list_stops[i].Group = (unsigned int)buffer;	
       }	    
       
-      //get distance matrix	
-      /*
+      //get distance matrix
       _dist = new unsigned int [_num_stops * _num_stops];
       for (unsigned int i = 0; i < _num_stops; i++) {
           for (unsigned int j = 0; j < _num_stops; j++) {
               file >> buffer;
               _dist[i*_num_stops + j] = (unsigned int)buffer;
-          }
-      } 
-      */
-
-      // hiệu chỉnh nhanh ma tran khoang cach
-      unsigned int _temp[18*18];
-      for (unsigned int i = 0; i < 18; i++) {
-          for (unsigned int j = 0; j < 18; j++) {
-              file >> buffer;
-              _temp[i*18 + j] = (unsigned int)buffer;
-          }
-      } 
-      _dist = new unsigned int [_num_stops * _num_stops];
-      for (unsigned int i = 0; i < _num_stops; i++) {
-          unsigned int index = i < 2 ? i : (i - 2)/3 + 2;
-          for (unsigned int j = 0; j < _num_stops; j++) {
-              unsigned int jndex = j < 2 ? j : (j - 2)/3 + 2;
-              _dist[i*_num_stops + j] = _temp[index*18 + jndex];
           }
       } 
 
@@ -186,7 +167,7 @@ void vrpProblem::printOn(ostream& os) const {
         cout << endl;
     }   
     
-    os << "Conflict matrix: " << *_conflict_group;
+    os << "Conflict matrix:\n" << *_conflict_group;
 }
 void vrpProblem::printTable(const char* file_name) {
     ofstream os(file_name,ios::trunc);

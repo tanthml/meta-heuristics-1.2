@@ -131,9 +131,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpCyclicMove.o \
 	${OBJECTDIR}/vrp/vrpCyclicNext.o \
 	${OBJECTDIR}/vrp/vrpCyclicRand.o \
-	${OBJECTDIR}/vrp/vrpGASearch.o \
 	${OBJECTDIR}/vrp/vrpGenne.o \
 	${OBJECTDIR}/vrp/vrpGroupConflict.o \
+	${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o \
 	${OBJECTDIR}/vrp/vrpInterchangeMove.o \
 	${OBJECTDIR}/vrp/vrpInterchangeNext.o \
 	${OBJECTDIR}/vrp/vrpInterchangeRand.o \
@@ -146,8 +146,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpStop.o \
 	${OBJECTDIR}/vrp/vrpSubRoute.o \
 	${OBJECTDIR}/vrp/vrpSubRouteMove.o \
-	${OBJECTDIR}/vrp/vrpSubRouteNext.o \
-	${OBJECTDIR}/vrp/vrpTSSearch.o
+	${OBJECTDIR}/vrp/vrpSubRouteNext.o
 
 
 # C Compiler Flags
@@ -654,11 +653,6 @@ ${OBJECTDIR}/vrp/vrpCyclicRand.o: vrp/vrpCyclicRand.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpCyclicRand.o vrp/vrpCyclicRand.cpp
 
-${OBJECTDIR}/vrp/vrpGASearch.o: vrp/vrpGASearch.cpp 
-	${MKDIR} -p ${OBJECTDIR}/vrp
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpGASearch.o vrp/vrpGASearch.cpp
-
 ${OBJECTDIR}/vrp/vrpGenne.o: vrp/vrpGenne.cpp 
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
@@ -668,6 +662,11 @@ ${OBJECTDIR}/vrp/vrpGroupConflict.o: vrp/vrpGroupConflict.cpp
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpGroupConflict.o vrp/vrpGroupConflict.cpp
+
+${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o: vrp/vrpHCInterchangeSearch.cpp 
+	${MKDIR} -p ${OBJECTDIR}/vrp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o vrp/vrpHCInterchangeSearch.cpp
 
 ${OBJECTDIR}/vrp/vrpInterchangeMove.o: vrp/vrpInterchangeMove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/vrp
@@ -733,11 +732,6 @@ ${OBJECTDIR}/vrp/vrpSubRouteNext.o: vrp/vrpSubRouteNext.cpp
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpSubRouteNext.o vrp/vrpSubRouteNext.cpp
-
-${OBJECTDIR}/vrp/vrpTSSearch.o: vrp/vrpTSSearch.cpp 
-	${MKDIR} -p ${OBJECTDIR}/vrp
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpTSSearch.o vrp/vrpTSSearch.cpp
 
 # Subprojects
 .build-subprojects:

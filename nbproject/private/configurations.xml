@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -24,8 +26,6 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 102_stop.con</runcommandpicklistitem>
-          <runcommandpicklistitem>mpirun -np 5 "${OUTPUT_PATH}" berlin52.tsp</runcommandpicklistitem>
           <runcommandpicklistitem>/usr/lib/openmpi/lib/mpirun -np 5 "${OUTPUT_PATH}" 102_stop.vrp</runcommandpicklistitem>
           <runcommandpicklistitem>/usr/lib/openmpi/lib/mpirun -np 5 "${OUTPUT_PATH}" berlin52.tsp</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" pr2392.tsp</runcommandpicklistitem>
@@ -33,9 +33,11 @@
           <runcommandpicklistitem>/usr/lib/openmpi/bin/mpirun -np 5 "${OUTPUT_PATH}" berlin52.tsp</runcommandpicklistitem>
           <runcommandpicklistitem>mpirun -np 5 "${OUTPUT_PATH}" 102_stop.vrp</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 102_stop.vrp</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 50_stops.con</runcommandpicklistitem>
           <runcommandpicklistitem>"${OUTPUT_PATH}" 15_stops.con</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" 15_stops.con</runcommand>
+        <runcommand>"${OUTPUT_PATH}" services.con</runcommand>
         <rundir>./run</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

@@ -238,6 +238,7 @@
         <itemPath>vrp/vrpSEQSearch.cpp</itemPath>
         <itemPath>vrp/vrpTSSearch.cpp</itemPath>
         <itemPath>vrp/vrpVariableSearch.cpp</itemPath>
+        <itemPath>vrp/wcvrptwc.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="objs" projectFiles="true">
         <itemPath>vrp/vrpConst.cpp</itemPath>
@@ -740,8 +741,6 @@
       </item>
       <item path="vrp/vrpDefine.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="vrp/vrpGASearch.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="vrp/vrpGenne.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpGenne.h" ex="false" tool="3" flavor2="0">
@@ -749,6 +748,8 @@
       <item path="vrp/vrpGroupConflict.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpGroupConflict.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vrp/vrpHCInterchangeSearch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpInterchangeMove.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -803,8 +804,6 @@
       <item path="vrp/vrpSubRouteNext.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpSubRouteNext.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="vrp/vrpTSSearch.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -1355,6 +1354,8 @@
       <item path="vrp/vrpTSSearch.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpVariableSearch.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="vrp/wcvrptwc.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
   </confs>
