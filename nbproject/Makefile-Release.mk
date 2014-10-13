@@ -173,7 +173,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpSubRouteMove.o \
 	${OBJECTDIR}/vrp/vrpSubRouteNext.o \
 	${OBJECTDIR}/vrp/vrpTSSearch.o \
-	${OBJECTDIR}/vrp/vrpVariableSearch.o
+	${OBJECTDIR}/vrp/vrpVariableSearch.o \
+	${OBJECTDIR}/vrp/wcvrptwc.o
 
 
 # C Compiler Flags
@@ -894,6 +895,11 @@ ${OBJECTDIR}/vrp/vrpVariableSearch.o: vrp/vrpVariableSearch.cpp
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpVariableSearch.o vrp/vrpVariableSearch.cpp
+
+${OBJECTDIR}/vrp/wcvrptwc.o: vrp/wcvrptwc.cpp 
+	${MKDIR} -p ${OBJECTDIR}/vrp
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/wcvrptwc.o vrp/wcvrptwc.cpp
 
 # Subprojects
 .build-subprojects:

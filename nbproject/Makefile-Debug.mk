@@ -17,12 +17,12 @@ RANLIB=ranlib
 CC=gcc
 CCC=mpic++
 CXX=mpic++
-FC=gfortran
+FC=mpif90
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=openMPI-Linux-x86
+CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -133,7 +133,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpCyclicRand.o \
 	${OBJECTDIR}/vrp/vrpGenne.o \
 	${OBJECTDIR}/vrp/vrpGroupConflict.o \
-	${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o \
 	${OBJECTDIR}/vrp/vrpInterchangeMove.o \
 	${OBJECTDIR}/vrp/vrpInterchangeNext.o \
 	${OBJECTDIR}/vrp/vrpInterchangeRand.o \
@@ -146,7 +145,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/vrp/vrpStop.o \
 	${OBJECTDIR}/vrp/vrpSubRoute.o \
 	${OBJECTDIR}/vrp/vrpSubRouteMove.o \
-	${OBJECTDIR}/vrp/vrpSubRouteNext.o
+	${OBJECTDIR}/vrp/vrpSubRouteNext.o \
+	${OBJECTDIR}/vrp/wcvrptwc.o
 
 
 # C Compiler Flags
@@ -167,9 +167,9 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2.exe
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2.exe: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2 ${OBJECTFILES} ${LDLIBSOPTIONS}
 
@@ -663,11 +663,6 @@ ${OBJECTDIR}/vrp/vrpGroupConflict.o: vrp/vrpGroupConflict.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpGroupConflict.o vrp/vrpGroupConflict.cpp
 
-${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o: vrp/vrpHCInterchangeSearch.cpp 
-	${MKDIR} -p ${OBJECTDIR}/vrp
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpHCInterchangeSearch.o vrp/vrpHCInterchangeSearch.cpp
-
 ${OBJECTDIR}/vrp/vrpInterchangeMove.o: vrp/vrpInterchangeMove.cpp 
 	${MKDIR} -p ${OBJECTDIR}/vrp
 	${RM} "$@.d"
@@ -733,13 +728,18 @@ ${OBJECTDIR}/vrp/vrpSubRouteNext.o: vrp/vrpSubRouteNext.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/vrpSubRouteNext.o vrp/vrpSubRouteNext.cpp
 
+${OBJECTDIR}/vrp/wcvrptwc.o: vrp/wcvrptwc.cpp 
+	${MKDIR} -p ${OBJECTDIR}/vrp
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/vrp/wcvrptwc.o vrp/wcvrptwc.cpp
+
 # Subprojects
 .build-subprojects:
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2.exe
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/meta-heuristics-1.2
 
 # Subprojects
 .clean-subprojects:

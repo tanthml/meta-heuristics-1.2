@@ -312,7 +312,7 @@
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>Cygwin|Cygwin</compilerSet>
+        <compilerSet>openMPI|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -749,8 +749,6 @@
       </item>
       <item path="vrp/vrpGroupConflict.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="vrp/vrpHCInterchangeSearch.cpp" ex="false" tool="1" flavor2="0">
-      </item>
       <item path="vrp/vrpInterchangeMove.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpInterchangeMove.h" ex="false" tool="3" flavor2="0">
@@ -804,6 +802,8 @@
       <item path="vrp/vrpSubRouteNext.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="vrp/vrpSubRouteNext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="vrp/wcvrptwc.cpp" ex="false" tool="1" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">

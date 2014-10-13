@@ -15,41 +15,49 @@ int main(int argc, char** argv) {
   if (argc != 2)
   {
     std::cerr << "Usage : ./" <<  __progname
-              << " [meta-heuristics] [instance] [parameters]" << std::endl;
+              << " [heuristic] [instance] [parameters]" << std::endl;
   }
   else
   {
     vrpProblem *vrpPro = new vrpProblem(argv[1]);
-    edaSolutionList list;
-    for(unsigned int i = 0; i < 1; i++) {
-      vrpSolution *vrpSol = new vrpSolution (vrpPro); 
-      vrpSol->init();
-      list.push_back(vrpSol);
-    }	
+    if( strcmp(argv[2],'HC') == 0 ) {
+        edaSolutionList list;
+        for(unsigned int i = 0; i < 1; i++) {
+          vrpSolution *vrpSol = new vrpSolution (vrpPro); 
+          vrpSol->init();
+          list.push_back(vrpSol);
+        }	
 
-    vrpInterchangeMove optMove;
-    vrpInterchangeNext optNext(vrpPro);
-    edaFirstImprSelect moveSelect;
-    edaGenContinue cont; 
-    edaHC hcSearch(&optMove, &optNext, &moveSelect, &cont);  
+        vrpInterchangeMove optMove;
+        vrpInterchangeNext optNext(vrpPro);
+        if(strcmp(argv[3],'Best') == 0) {
+            edaBestImprSelect moveSelect;
+        }
+        else {
+            edaFirstImprSelect moveSelect;
+        }
+        unsigned int numloop = atoi(argv[4])
+        edaGenContinue cont; 
+        edaHC hcSearch(&optMove, &optNext, &moveSelect, &cont);  
 
-    edaSeqWrapperControl sfControl; 
-    sfControl.insertVertex (&hcSearch);   
+        edaSeqWrapperControl sfControl; 
+        sfControl.insertVertex (&hcSearch);   
 
-    if (!sfControl.search (list))
-    {
-        cout << "Error: Cannot execute search" << std::endl;
-    }
-    else
-    {
-        vrpSolution* vrpSol = (vrpSolution*) list.getBest();
-        cout << "[To Fitness] " << vrpSol->evaluate () << endl;
-        cout << "[To Total Dist] " << vrpSol->getTotalDist () << endl;
-        cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
-        cout << "[Vehicles] " << vrpSol->size() << endl;
-        cout << "[Route] " << *vrpSol << endl;
-        cout << "------------------------------------------------------------------------------------------" << endl;
-        vrpSol->debug(cout);
+        if (!sfControl.search (list))
+        {
+            cout << "Error: Cannot execute search" << std::endl;
+        }
+        else
+        {
+            vrpSolution* vrpSol = (vrpSolution*) list.getBest();
+            cout << "[To Fitness] " << vrpSol->evaluate () << endl;
+            cout << "[To Total Dist] " << vrpSol->getTotalDist () << endl;
+            cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
+            cout << "[Vehicles] " << vrpSol->size() << endl;
+            cout << "[Route] " << *vrpSol << endl;
+            cout << "------------------------------------------------------------------------------------------" << endl;
+            vrpSol->debug(cout);
+        }
     }
   }
   EDAMetasearchStop ();
