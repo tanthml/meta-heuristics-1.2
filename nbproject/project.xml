@@ -14,10 +14,6 @@
                 <sourceRootElem>tsp</sourceRootElem>
                 <sourceRootElem>vrp</sourceRootElem>
                 <sourceRootElem>air</sourceRootElem>
-                <sourceRootElem>lib</sourceRootElem>
-                <sourceRootElem>tsp</sourceRootElem>
-                <sourceRootElem>vrp</sourceRootElem>
-                <sourceRootElem>air</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

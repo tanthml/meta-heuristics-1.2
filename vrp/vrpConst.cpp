@@ -9,7 +9,7 @@
 
 vrpConst::vrpConst(TYPE type) {    
     if(type == Default) {
-        load("vrptest/config.txt");
+        load("config.con");
     }
     else if(type == Random) {
         THETA_1 = rnd.uniform();

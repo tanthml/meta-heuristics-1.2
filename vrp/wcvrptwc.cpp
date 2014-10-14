@@ -12,53 +12,126 @@ using namespace std;
 
 int main(int argc, char** argv) {
   EDAMetasearchStart (argc, argv);  
-  if (argc != 2)
+  if (argc < 5)
   {
     std::cerr << "Usage : ./" <<  __progname
-              << " [heuristic] [instance] [parameters]" << std::endl;
+            << " [instance] [HC] [Best/First] [NumLoop]\n" 
+            << " Or : ./" <<  __progname
+            << " [instance] [SA] [Linear/Exponent] [NumLoop] [InitTemp] [Threshold] [Quantity/Ratio]\n" 
+            << " Or : ./" <<  __progname
+            << " [instance] [TS] [Best/No] [NumLoop] [NumTabuList]\n" 
+            << " Or : ./" <<  __progname
+            << " [instance] [GA] [Rank/Weight] [NumLoop] [NumPop] [SelectRate] [CrossRate] [MuteRate]\n";
   }
   else
   {
     vrpProblem *vrpPro = new vrpProblem(argv[1]);
-    if( strcmp(argv[2],'HC') == 0 ) {
-        edaSolutionList list;
-        for(unsigned int i = 0; i < 1; i++) {
-          vrpSolution *vrpSol = new vrpSolution (vrpPro); 
-          vrpSol->init();
-          list.push_back(vrpSol);
-        }	
-
+    vrpConst *vrpCon = new vrpConst();
+    edaSolutionList list;
+    for(unsigned int i = 0; i < 1; i++) {
+        vrpSolution *vrpSol = new vrpSolution (vrpPro); 
+        vrpSol->init();
+        list.push_back(vrpSol);
+    }
+    edaSearch* search = NULL;
+    
+    if( strcmp(argv[2],"HC") == 0 ) {  
         vrpInterchangeMove optMove;
         vrpInterchangeNext optNext(vrpPro);
-        if(strcmp(argv[3],'Best') == 0) {
-            edaBestImprSelect moveSelect;
+        edaMoveSelect* moveSelect = NULL;
+        if(strcmp(argv[3],"Best") == 0) {
+            moveSelect = new edaBestImprSelect();
         }
-        else {
-            edaFirstImprSelect moveSelect;
-        }
-        unsigned int numloop = atoi(argv[4])
-        edaGenContinue cont; 
-        edaHC hcSearch(&optMove, &optNext, &moveSelect, &cont);  
-
-        edaSeqWrapperControl sfControl; 
-        sfControl.insertVertex (&hcSearch);   
-
-        if (!sfControl.search (list))
-        {
-            cout << "Error: Cannot execute search" << std::endl;
-        }
-        else
-        {
-            vrpSolution* vrpSol = (vrpSolution*) list.getBest();
-            cout << "[To Fitness] " << vrpSol->evaluate () << endl;
-            cout << "[To Total Dist] " << vrpSol->getTotalDist () << endl;
-            cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
-            cout << "[Vehicles] " << vrpSol->size() << endl;
-            cout << "[Route] " << *vrpSol << endl;
-            cout << "------------------------------------------------------------------------------------------" << endl;
-            vrpSol->debug(cout);
-        }
+        else if(strcmp(argv[3],"First") == 0) {
+            moveSelect = new edaFirstImprSelect();
+        }        
+        unsigned int numloop = atoi(argv[4]);
+        edaGenContinue cont(numloop); 
+        search = new edaHC(&optMove, &optNext, moveSelect, &cont);          
     }
+    else if(strcmp(argv[2],"SA") == 0 ) {
+        vrpInterchangeMove optMove;
+        vrpInterchangeNext optNextRan(vrpPro);
+        edaCoolingSchedule* coolingSchedule = NULL;               
+        if(strcmp(argv[3],"Linear") == 0) {
+            float threshold = atoi(argv[6]); 
+            float quantity = atof(argv[7]);
+            coolingSchedule = new edaLinearCoolingSchedule(threshold, quantity);
+        }
+        else if (strcmp(argv[3],"Exponent") == 0) {
+            float threshold = atoi(argv[6]); 
+            float ratio = atof(argv[7]);
+            coolingSchedule = new edaExpCoolingSchedule(threshold, ratio);
+        }   
+        unsigned int numloop = atoi(argv[4]);
+        edaGenContinue cont(numloop); 
+        float initTemp = atof(argv[5]);
+        search = new edaSA(&optMove, &optNextRan, &cont,  initTemp, coolingSchedule);  
+    }
+    else if(strcmp(argv[2],"TS") == 0 ) {
+        vrpInterchangeMove optMove;
+        vrpInterchangeNext optNext(vrpPro);
+        
+        edaAspirCrit* aspirCrit;       
+        if(strcmp(argv[3],"Best") == 0) {
+            aspirCrit = new edaImprBestFitAspirCrit();
+        }
+        else if(strcmp(argv[3],"No") == 0) {
+            aspirCrit = new edaNoAspirCrit();
+        }
+        unsigned int numloop = atoi(argv[4]);
+        edaGenContinue cont(numloop); 
+        unsigned int numlist = atoi(argv[5]);
+        edaSimpleMoveTabuList tabuList(numlist);        
+        search = new edaTS(&optMove, &optNext, &tabuList, aspirCrit, &cont);  
+    }
+    else if(strcmp(argv[2],"GA") == 0 ) {
+        vrpRepresentation repre(*vrpPro, *vrpCon);
+        edaNaturalSelection* slect = NULL;
+        if(strcmp(argv[3],"Rank") == 0) {
+            float nRate = atof(argv[6]);
+            slect = new edaRouletteWheelSelection(nRate);
+        }
+        else if(strcmp(argv[3],"Weight") == 0) {
+            float nRate = atof(argv[6]);
+            slect = new edaRouletteWheelSelection(nRate);
+        }
+        unsigned int numloop = atoi(argv[4]);
+        edaGenContinue cont(numloop);
+        unsigned int numpop = atoi(argv[5]);
+        for(unsigned int i = 1; i < numpop; i++) {
+            vrpSolution *vrpSol = new vrpSolution (vrpPro); 
+            vrpSol->init();
+            list.push_back(vrpSol);
+        }	        
+        
+        float cRate = atof(argv[7]);
+        edaPartiallyMatchedCrossover cross(cRate);
+        
+        float mRate = atof(argv[8]);
+        edaRandSwapMutation mute(mRate);   
+        
+        search = new edaGA(&cont, &repre, slect, &cross, &mute);
+    }
+    edaSeqWrapperControl sfControl; 
+    sfControl.insertVertex(search);   
+
+    if (!sfControl.search(list))
+    {
+        cout << "Error: Cannot execute search" << std::endl;
+    }
+    else
+    {
+        vrpSolution* vrpSol = (vrpSolution*) list.getBest();
+        cout << "[To Fitness] " << vrpSol->evaluate () << endl;
+        cout << "[To Total Dist] " << vrpSol->getTotalDist () << endl;
+        cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
+        cout << "[Vehicles] " << vrpSol->size() << endl;
+        cout << "[Route] " << *vrpSol << endl;
+        cout << "------------------------------------------------------------------------------------------" << endl;
+        //vrpSol->debug(cout);
+    }
+    
   }
   EDAMetasearchStop ();
   return 0;

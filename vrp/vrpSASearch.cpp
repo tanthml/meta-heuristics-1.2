@@ -33,7 +33,7 @@ int main(int argc, char** argv) {
     vrpInterchangeMove* optMove = new vrpInterchangeMove();
     vrpInterchangeNext optNextRan(vrpPro);
     edaGenContinue cont_criteria (50); 
-    edaExpCoolingSchedule coolingSchedule (0.01, 0.98);
+    edaLinearCoolingSchedule coolingSchedule (0.01, 0.98);
     edaSA saSearch (optMove, &optNextRan, &cont_criteria,
             5.0, &coolingSchedule);  
 

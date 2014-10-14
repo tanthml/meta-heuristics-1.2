@@ -21,7 +21,7 @@ FC=mpif90
 AS=as
 
 # Macros
-CND_PLATFORM=openMPI-Linux-x86
+CND_PLATFORM=GNU-Linux-x86
 CND_DLIB_EXT=so
 CND_CONF=Debug
 CND_DISTDIR=dist
