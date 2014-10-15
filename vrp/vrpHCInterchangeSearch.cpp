@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
   }
   else
   {
-    vrpProblem *vrpPro = new vrpProblem(argv[1]);
+    vrpProblem *vrpPro = new vrpProblem("services.con");
     edaSolutionList list;
     for(unsigned int i = 0; i < 1; i++) {
         vrpSolution *vrpSol = new vrpSolution (vrpPro); 
