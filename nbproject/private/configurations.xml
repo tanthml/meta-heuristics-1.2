@@ -5,7 +5,7 @@
     <conf name="Debug" type="1">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <platform>2</platform>
+        <platform>3</platform>
       </toolsSet>
       <dbx_gdbdebugger version="1">
         <gdb_pathmaps>
@@ -13,6 +13,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -24,18 +26,18 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con Best </runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con HC Best 50</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con HC Best 50 1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 1500100 0.90.98</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 1500100 0.9 0.98</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 1500 100 0.9 0.98</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 3 100 0.9 0.98</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 3 50 0.01 0.98</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" services.con SA Exponent 3 5 0.01 0.98</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con TS Best 50 0</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA r</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Ranh 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Rank 50 50 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Rank 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Rank 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Weigth 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" services.con SA Exponent 3 5 0.01 0.98</runcommand>
+        <runcommand>"${OUTPUT_PATH}" 98a_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommand>
         <rundir>./run</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

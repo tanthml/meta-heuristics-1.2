@@ -26,6 +26,7 @@ int main(int argc, char** argv) {
   else
   {
     vrpProblem *vrpPro = new vrpProblem(argv[1]);
+    //cout << *vrpPro << endl;
     vrpConst *vrpCon = new vrpConst();
     edaSolutionList list;
     for(unsigned int i = 0; i < 1; i++) {
@@ -54,12 +55,12 @@ int main(int argc, char** argv) {
         vrpInterchangeNext optNextRan(vrpPro);
         edaCoolingSchedule* coolingSchedule = NULL;               
         if(strcmp(argv[3],"Linear") == 0) {
-            float threshold = atoi(argv[6]); 
+            float threshold = atof(argv[6]); 
             float quantity = atof(argv[7]);
             coolingSchedule = new edaLinearCoolingSchedule(threshold, quantity);
         }
         else if (strcmp(argv[3],"Exponent") == 0) {
-            float threshold = atoi(argv[6]); 
+            float threshold = atof(argv[6]); 
             float ratio = atof(argv[7]);
             coolingSchedule = new edaExpCoolingSchedule(threshold, ratio);
         }   
@@ -125,11 +126,12 @@ int main(int argc, char** argv) {
         vrpSolution* vrpSol = (vrpSolution*) list.getBest();
         cout << "[To Fitness] " << vrpSol->evaluate () << endl;
         cout << "[To Total Dist] " << vrpSol->getTotalDist () << endl;
-        cout << "[To Total Wait] " << vrpSol->getTotalWaitTime () << endl;
+        cout << "[To Total Move Time] " << vrpSol->getTotalMoveTime () << endl;
+        cout << "[To Total Wait Time] " << vrpSol->getTotalWaitTime () << endl;
         cout << "[Vehicles] " << vrpSol->size() << endl;
         cout << "[Route] " << *vrpSol << endl;
         cout << "------------------------------------------------------------------------------------------" << endl;
-        //vrpSol->debug(cout);
+        vrpSol->debug(cout);
     }
     
   }

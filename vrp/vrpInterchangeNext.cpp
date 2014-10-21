@@ -40,6 +40,7 @@ bool vrpInterchangeNext::isFeasibleMove(vrpSolution* vrpSol, vrpInterchangeMove*
     
   vrpSubRoute* sub1 = route1->at(M.ID_SUB_1);
   vrpSubRoute* sub2 = route2->at(M.ID_SUB_2); 
+  if(M.POS_OPT_2 > sub2->size() - 1 || M.POS_OPT_1 > sub1->size() - 1) goto FINISH;
   if(M.POS_OPT_1 + M.NUM_OPT_1 > sub1->size() - 2
             || M.POS_OPT_2 + M.NUM_OPT_2 > sub2->size() - 2) goto FINISH;      
     if(_problem->getStop(sub1->at(M.POS_OPT_1))->Type != REGULAR_STOP) goto FINISH;   

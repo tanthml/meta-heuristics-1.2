@@ -348,8 +348,8 @@ void vrpSubRoute::debug(ostream &os) {
         for(unsigned int i = 0; i < size(); i++) {
             vrpStop* stop = _problem->getStop(at(i));
             os << stop->ID << "\t";
-            os << (int)stop->X << "\t";
-            os << (int)stop->Y << "\t";
+            os << stop->X << "\t";
+            os << stop->Y << "\t";
             os << (int)stop->EarlyTime << "\t";
             os << (int)stop->LateTime << "\t";
             os << (int)_start[i] << "\t";

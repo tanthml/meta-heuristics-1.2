@@ -125,100 +125,24 @@ bool vrpInterchangeRand::generate(edaMove *move, const edaSolution &sol) {
     vrpInterchangeMove& M = *((vrpInterchangeMove*)move);
     vrpSolution &vrpSol = (vrpSolution&)sol; 
     if(vrpSol.size() < 2) return false;
-
-    vrpRoute* route1 = NULL;
-    vrpRoute* route2 = NULL;
-    vrpSubRoute* sub1 = NULL;
-    vrpSubRoute* sub2 = NULL;
-
-START:
     
-  route1 = vrpSol[M.ID_ROUTE_1];
-  route2 = vrpSol[M.ID_ROUTE_2];
-  if(route1 == NULL || route2 == NULL) return false;  
-
-  sub1 = route1->at(M.ID_SUB_1);
-  sub2 = route2->at(M.ID_SUB_2);
-  if(sub1 == NULL || sub2 == NULL ) return false;
-
-  int len1 = sub1->size();
-  int len2 = sub2->size();
-  if(M.ID_SUB_1 == route1->size() - 1) len1 --;
-  if(M.ID_SUB_2 == route2->size() - 1) len2 --;
-
-  if((int)(M.POS_OPT_2 + M.NUM_OPT_2)  < len2 - 2) 
-  {
-    M.POS_OPT_2 ++;    
-  } 
-  else 
-  {
-    M.POS_OPT_2 = 1;
-    if((int)(M.POS_OPT_1 + M.NUM_OPT_1) < len1 - 2)
+START:
+    M.ID_ROUTE_1 = rnd.uniform(0, vrpSol.size() - 1);
+    M.ID_ROUTE_2 = rnd.uniform(0, vrpSol.size() - 1);
+    M.ID_SUB_1 = rnd.uniform(0, vrpSol[M.ID_ROUTE_1]->size() - 1);
+    M.ID_SUB_2 = rnd.uniform(0, vrpSol[M.ID_ROUTE_2]->size() - 1);
+    M.POS_OPT_1 = rnd.uniform(0, vrpSol[M.ID_ROUTE_1]->at(M.ID_SUB_1)->size() - 1);
+    M.POS_OPT_2 = rnd.uniform(0, vrpSol[M.ID_ROUTE_2]->at(M.ID_SUB_2)->size() - 1);
+    M.NUM_OPT_1 = rnd.uniform(0,4);
+    M.NUM_OPT_2 = rnd.uniform(0,4);
+    if(!isFeasibleMove(&vrpSol, &M)) 
     {
-      M.POS_OPT_1++;
-    } 
-    else 
-    {
-      M.POS_OPT_1 = 1;
-      if(M.NUM_OPT_2 < lambda) 
-      {
-        M.NUM_OPT_2++;
-      } 
-      else 
-      {
-        if(M.NUM_OPT_1 < lambda) 
-        {
-          M.NUM_OPT_1++;
-          M.NUM_OPT_2 = 0;
-        } 
-        else 
-        {
-          M.NUM_OPT_1 = 0;
-          M.NUM_OPT_2 = 1;
-          if(M.ID_SUB_2 < route2->size() - 1) 
-          {
-            M.ID_SUB_2++;
-          } 
-          else 
-          {
-            M.ID_SUB_2 = 0;
-            if(M.ID_SUB_1  < route1->size() -1) 
-            {
-              M.ID_SUB_1++;
-            } 
-            else 
-            {
-              M.ID_SUB_1 = 0;
-              if ( M.ID_ROUTE_2 < vrpSol.size() - 1) 
-              {
-                M.ID_ROUTE_2++;
-              } 
-              else 
-              {
-                if(M.ID_ROUTE_1 < vrpSol.size() - 2) 
-                {
-                  M.ID_ROUTE_1 ++;
-                  M.ID_ROUTE_2 = M.ID_ROUTE_1 + 1;
-                } 
-                else 
-                {                
-                  return false;
-                }                
-              }                          
-            }          
-          }                  
-        }      
-      }          
+      goto START;
     }
-  }
-  if(!isFeasibleMove(&vrpSol, &M)) 
-  {
-    goto START;
-  }
-  else 
-  { 
-    return true;
-  }
+    else 
+    { 
+      return true;
+    }
 }
 
 void vrpInterchangeRand::Serialize(edaBuffer &buf, bool pack)

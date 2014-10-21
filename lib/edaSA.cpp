@@ -61,7 +61,6 @@ bool edaSA::search(edaSolutionList &list)
   {
     edaSolution &sol = *list[i];  
     edaSolution *newSol = sol.clone();     
-    
     move->init(sol);
     con->init();
 //    cout << "F: " << sol.evaluate() << endl;
@@ -99,12 +98,10 @@ bool edaSA::search(edaSolutionList &list)
           }
         }
       } while (coolingSchedule->check(temp)); 
-
-      printCSVLog("SA", TaskID, ProcID, "P", i, *con, list);
       
+      printCSVLog("SA", TaskID, ProcID, "P", i, *con, list);      
     } while (con->check(list));   
-    
-    sol = *newSol;
+    sol = *newSol;    
     delete newSol;  
         
     printCSVLog("SA", TaskID, ProcID, "F", i, *con, list);
