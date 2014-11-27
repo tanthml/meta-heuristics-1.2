@@ -127,9 +127,9 @@ int main(int argc, char** argv) {
           vrpSolution* vrpSol = (vrpSolution*) list.getBest();
           cout << "{\"Status\":\"Success\",";
           cout << "\"Fitness\":" << -vrpSol->evaluate () << ",";
-          cout << "\"Dist\":" << vrpSol->getTotalDist() << ",";
-          cout << "\"Move\":" << vrpSol->getTotalMoveTime ()/1000 << ",";
-          cout << "\"Wait\":" << vrpSol->getTotalWaitTime () << ",";
+          cout << "\"Dist\":" << vrpSol->getTotalDist()/1000 << ",";
+          cout << "\"Move\":" << vrpSol->getTotalMoveTime() << ",";
+          cout << "\"Wait\":" << vrpSol->getTotalWaitTime() << ",";
           cout << "\"Vehicle\":" << vrpSol->size() << "}";
           //cout << "[Route] " << *vrpSol << endl;       
           vrpSol->writeCSVFile("log");
