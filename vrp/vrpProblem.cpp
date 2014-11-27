@@ -40,7 +40,7 @@ vrpProblem* vrpProblem::clone() const {
 void vrpProblem::load(const char* filename) {
   easer();  
   ifstream file(filename);
-  cout << ">> Loading [" << filename << "]" << endl;
+  //cout << ">> Loading [" << filename << "]" << endl;
   double buffer;
   if (file) 
   {  

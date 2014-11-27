@@ -13,8 +13,6 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
-        <gdb_signals>
-        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>
@@ -26,18 +24,18 @@
       </nativedebugger>
       <runprofile version="9">
         <runcommandpicklist>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con TS Best 50 0</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA r</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Ranh 50 500 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Rank 50 50 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Rank 50 500 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Rank 50 500 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Weigth 50 500 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommandpicklistitem>
-          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98b_stop.con SA Exponent 50 50 0 1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con SA Exponent 50 50 0 1</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con SA Exponent 50 50 0.1 0.99</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con HC </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con HC</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con SA Best 50</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con SA </runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con SA Exponent 50 1500 0.01 0.99</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con HC Global 50 1500 0.01 0.99</runcommandpicklistitem>
+          <runcommandpicklistitem>"${OUTPUT_PATH}" 98a_stop.con HC Best 50</runcommandpicklistitem>
         </runcommandpicklist>
-        <runcommand>"${OUTPUT_PATH}" 98a_stop.con GA Weight 50 500 0.5 0.9 0.1</runcommand>
+        <runcommand>"${OUTPUT_PATH}" 98a_stop.con HC Best 50</runcommand>
         <rundir>./run</rundir>
         <buildfirst>true</buildfirst>
         <terminal-type>0</terminal-type>

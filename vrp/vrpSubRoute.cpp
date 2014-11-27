@@ -343,7 +343,7 @@ void vrpSubRoute::debug(ostream &os) {
     os << endl;
     
     os << "Size of route: " << size() << endl;    
-    if(size() > 0) {
+    if(size() > 2) {
         os << "ID\tX\tY\tEarly\tLate\tStart\tService\tWait\tAcomn\tLoad\tGroup\tType\n";
         for(unsigned int i = 0; i < size(); i++) {
             vrpStop* stop = _problem->getStop(at(i));

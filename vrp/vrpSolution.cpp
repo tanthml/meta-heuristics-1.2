@@ -208,7 +208,8 @@ vrpStop* vrpSolution::getNextStop(vrpSubRoute& sub, unsigned int &pos) const {
 
 vrpSubRoute* vrpSolution::createSubRoute(vrpStop* ref, double rest_dist, double coming_time){
     vrpStop* _depot = _problem->getDepot();  
-    vrpStop* stop = getBestFirstStop(ref, coming_time);//getRandomFirstStop(ref, coming_time);   
+    vrpStop* stop = getBestFirstStop(ref, coming_time);
+    //vrpStop* stop = getRandomFirstStop(ref, coming_time);   
     vector<vrpStop*> _landfill = _problem->getLandfill();
     if(stop != NULL) {
         vrpSubRoute *result = new vrpSubRoute(rest_dist, coming_time);
@@ -445,7 +446,7 @@ void vrpSolution::debug(ostream &os) const{
 }
 void vrpSolution::writeCSVFile(const char* file_name) const{      
     ofstream os(file_name,ios::trunc);
-    os << "ID,X,Y,Dist,Early,Late,Wait,Start,Service,Time,Load,Acomn,cX,cY,Metric,Group,Type,Sub,Route\n";
+    os << "ID,X,Y,Dist,Early,Late,Wait,Start,Service,Time,Load,Acomn,Group,Type,Sub,Route\n";
     for(unsigned int i = 0 ; i < size() ; i++) {
         vrpRoute* route = at(i);
         double dist = 0;
@@ -455,8 +456,8 @@ void vrpSolution::writeCSVFile(const char* file_name) const{
             for(unsigned int k = 0 ; k < sub->size() ; k++) {
                 vrpStop* stop = _problem->getStop(sub->at(k));
                 os << stop->ID << ",";
-                os << (int)stop->X << ",";
-                os << (int)stop->Y << ",";
+                os << stop->X << ",";
+                os << stop->Y << ",";
                 os << dist + sub->getDistance(k) << ",";
                 os << stop->EarlyTime << ",";
                 os << stop->LateTime << ",";
@@ -466,13 +467,12 @@ void vrpSolution::writeCSVFile(const char* file_name) const{
                 os << sub->getUseTime(k) << ",";
                 os << stop->Load << ",";
                 os << sub->getAcomnLoad(k) << ",";    
-                os << (int)sub->getCenterX() << ",";
-                os << (int)sub->getCenterY() << ",";
+//                os << (int)sub->getCenterX() << ",";
+//                os << (int)sub->getCenterY() << ",";
                 os << stop->Group << ",";
                 os << stop->Type << ",";
                 os << j << ",";
                 os << i << endl;
-
             }
         } 
     }
